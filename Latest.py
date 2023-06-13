@@ -12,6 +12,11 @@ correct_password = "ilovehealthcare"
 st.sidebar.markdown("## MSBA 350E")
 st.sidebar.markdown("## Welcome to Nicolas Araman's Dashboard")
 
+# Add the text above the sign-in information
+st.sidebar.markdown("Username: nea17")
+st.sidebar.markdown("Password: ilovehealthcare")
+st.sidebar.markdown("Enjoy the access while it lasts")
+
 # Check if the user is logged in
 if 'logged_in' not in st.session_state:
     # Add input fields for username and password
@@ -28,6 +33,9 @@ if 'logged_in' not in st.session_state:
             st.session_state['selected_pages'] = ["Introduction", "Visualization", "Customize Your Chart"]
         else:
             st.error("Invalid username or password")
+
+# Rest of the code...
+
 
 # If the user is logged in, show the main app content
 if 'logged_in' in st.session_state and st.session_state['logged_in']:
