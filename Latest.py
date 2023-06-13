@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
+import gdown
 
 # Define the correct username and password
 correct_username = "nea17"
@@ -46,8 +47,14 @@ if 'logged_in' in st.session_state and st.session_state['logged_in']:
         default=st.session_state.get('selected_pages', [])
     )
 
-    # Specify the file path
-    file_path = "C:/Users/User/Desktop/Healthcare Potential Datasets/Cardiovascular Disease/cleaned cardio dont touch/cleaned_cardio.csv"
+    # Specify the file URL
+    file_url = "https://drive.google.com/uc?id=1Tnb8EwnHUE4SyqIqyqA9lfZksvtGSpN4"
+
+    # Define the file path to save the downloaded file
+    file_path = "data/cleaned_cardio.csv"
+
+    # Download the file from Google Drive
+    gdown.download(file_url, file_path, quiet=False)
 
     # Load the CSV file
     try:
