@@ -47,20 +47,18 @@ if 'logged_in' in st.session_state and st.session_state['logged_in']:
         default=st.session_state.get('selected_pages', [])
     )
 
-    # Specify the file URL
-    file_url = "https://drive.google.com/uc?id=1Tnb8EwnHUE4SyqIqyqA9lfZksvtGSpN4"
-
-    # Define the file path to save the downloaded file
-    file_path = "data/cleaned_cardio.csv"
+    # Specify the file path
+    file_path = "cleaned_cardio.csv"
 
     # Download the file from Google Drive
-    gdown.download(file_url, file_path, quiet=False)
+    gdown.download("https://drive.google.com/uc?id=1Tnb8EwnHUE4SyqIqyqA9lfZksvtGSpN4", file_path, quiet=False)
 
     # Load the CSV file
     try:
         data = pd.read_csv(file_path)
     except FileNotFoundError:
         st.error("Failed to find the dataset file.")
+
 
     if "Introduction" in selected_pages:
         st.title("Introduction")
