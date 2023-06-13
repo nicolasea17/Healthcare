@@ -181,60 +181,60 @@ if 'logged_in' in st.session_state and st.session_state['logged_in']:
         st.plotly_chart(fig, use_container_width=True)
 
             # Create a DataFrame with counts for each Cholesterol and Cardio category
-    counts = data.groupby(['Cholesterol', 'Cardio']).size().reset_index(name='Count')
-
-    # Define the Cholesterol categories and their order
-    cholesterol_categories = ['Normal', 'Well_Above_Normal', 'Above_Normal']
-
-        # Add a visualization for glucose levels vs cardio
-    fig = px.histogram(data, x="Glucose", color="Cardio", barmode="group", title="Glucose Levels vs. Cardio")
-    fig.update_layout(xaxis_title="Glucose Level", yaxis_title="Count")
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Create a function to switch between chart types
-    def toggle_chart_type():
-        if reveal_truth:
-            # Create a stacked bar chart
-            fig = px.bar(counts, x='Cholesterol', y='Count', color='Cardio', barmode='stack',
-                         labels={'Cholesterol': 'Cholesterol', 'Count': 'Count', 'Cardio': 'Cardiovascular Disease'},
-                         category_orders={'Cholesterol': cholesterol_categories},
-                         title='Cholesterol vs Cardio Stacked Bar Chart')
-
-            fig.update_layout(
-                legend_title='Cardio',
-                xaxis_title='Cholesterol',
-                yaxis_title='Count'
-            )
-        else:
-            # Create a radar chart
-            fig = go.Figure()
-
-            for cardio_value in [True, False]:
-                values = counts[counts['Cardio'] == cardio_value]['Count'].tolist()
-                fig.add_trace(go.Scatterpolar(
-                    r=values,
-                    theta=cholesterol_categories,
-                    fill='toself',
-                    name='Cardio ' + str(cardio_value)
-                ))
-
-            fig.update_layout(
-                polar=dict(
-                    radialaxis=dict(
-                        visible=True
-                    )
-                ),
-                showlegend=True,
-                title='Cholesterol vs Cardio Radar Chart'
-            )
-
+        counts = data.groupby(['Cholesterol', 'Cardio']).size().reset_index(name='Count')
+    
+        # Define the Cholesterol categories and their order
+        cholesterol_categories = ['Normal', 'Well_Above_Normal', 'Above_Normal']
+    
+            # Add a visualization for glucose levels vs cardio
+        fig = px.histogram(data, x="Glucose", color="Cardio", barmode="group", title="Glucose Levels vs. Cardio")
+        fig.update_layout(xaxis_title="Glucose Level", yaxis_title="Count")
         st.plotly_chart(fig, use_container_width=True)
-
-    # Add a button for the toggle
-    reveal_truth = st.button("Reveal the Truth")
-
-    # Call the toggle_chart_type function
-    toggle_chart_type()
+    
+        # Create a function to switch between chart types
+        def toggle_chart_type():
+            if reveal_truth:
+                # Create a stacked bar chart
+                fig = px.bar(counts, x='Cholesterol', y='Count', color='Cardio', barmode='stack',
+                             labels={'Cholesterol': 'Cholesterol', 'Count': 'Count', 'Cardio': 'Cardiovascular Disease'},
+                             category_orders={'Cholesterol': cholesterol_categories},
+                             title='Cholesterol vs Cardio Stacked Bar Chart')
+    
+                fig.update_layout(
+                    legend_title='Cardio',
+                    xaxis_title='Cholesterol',
+                    yaxis_title='Count'
+                )
+            else:
+                # Create a radar chart
+                fig = go.Figure()
+    
+                for cardio_value in [True, False]:
+                    values = counts[counts['Cardio'] == cardio_value]['Count'].tolist()
+                    fig.add_trace(go.Scatterpolar(
+                        r=values,
+                        theta=cholesterol_categories,
+                        fill='toself',
+                        name='Cardio ' + str(cardio_value)
+                    ))
+    
+                fig.update_layout(
+                    polar=dict(
+                        radialaxis=dict(
+                            visible=True
+                        )
+                    ),
+                    showlegend=True,
+                    title='Cholesterol vs Cardio Radar Chart'
+                )
+    
+            st.plotly_chart(fig, use_container_width=True)
+    
+        # Add a button for the toggle
+        reveal_truth = st.button("Reveal the Truth")
+    
+        # Call the toggle_chart_type function
+        toggle_chart_type()
 
     if "Customize Your Chart" in selected_pages:
         st.title("Customize Your Chart")
